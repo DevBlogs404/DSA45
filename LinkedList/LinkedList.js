@@ -13,7 +13,8 @@ class LinkedList {
     this.length = 0;
   }
 
-  appendNode(nodeValue) {
+  // adds a node at th end of the list
+  push(nodeValue) {
     let node = new Node(nodeValue);
     if (!this.head) {
       this.head = node;
@@ -25,6 +26,8 @@ class LinkedList {
     this.length++;
     return this;
   }
+
+  // traverses the list and return node or node value
   traverse() {
     let counter = 0;
     let currentNode = this.head;
@@ -35,6 +38,8 @@ class LinkedList {
       counter++;
     }
   }
+
+  // removes the last element from the list
   pop() {
     if (!this.head) return null;
     let currentNode = this.head;
@@ -53,6 +58,7 @@ class LinkedList {
     return currentNode;
   }
 
+  // adds an element to the starting of the list
   unshift(val) {
     let node = new Node(val);
     if (!this.head) {
@@ -66,6 +72,7 @@ class LinkedList {
     return this;
   }
 
+  // removes an element from the starting of the list
   shift() {
     if (!this.head) return null;
     let oldHead = this.head;
@@ -79,6 +86,7 @@ class LinkedList {
     return oldHead;
   }
 
+  // returns an element of the requested index
   get(index) {
     if (index < 0 || index >= this.length) return null;
     let counter = 0;
@@ -90,6 +98,7 @@ class LinkedList {
     return currentNode;
   }
 
+  // sets the value of a node at the provided index
   set(index, val) {
     let foundNode = this.get(index);
     if (foundNode) {
@@ -99,33 +108,61 @@ class LinkedList {
     return false;
   }
 
+  insert(index, val) {
+    if (index < 0 || index > this.length) return false;
+    if (index === 0) {
+      this.unshift(val);
+      return true;
+    }
+    if (index === this.length) {
+      this.push(val);
+      return true;
+    }
+    let newNode = new Node(val);
+    let prevNode = this.get(index - 1);
+    newNode.next = prevNode.next;
+    prevNode.next = newNode;
+    this.length++;
+    return true;
+  }
+
+  remove(index) {
+    if (index < 0 || index > this.length) return undefined;
+    if (index === 0) {
+      this.shift();
+      return true;
+    }
+    if (index === this.length - 1) {
+      this.pop();
+      return true;
+    }
+    let prevNode = this.get(index - 1);
+    // let currentNode = this.get(index);
+    let removedNode = prevNode.next;
+    prevNode.next = removedNode.next;
+    this.length--;
+    return removedNode;
+  }
+
+  // returns the size or length of the list
   size() {
     // return this.length;
     console.log("length of the linked list is: " + this.length);
   }
-
-  //   search(val) {
-  //     let counter = 0;
-  //     let currentNode = this.head;
-  //     while (counter < this.length) {
-  //       //   console.log(currentNode);
-  //       if (currentNode.value === val) {
-  //         return currentNode;
-  //       }
-  //       currentNode = currentNode.next;
-  //       counter++;
-  //     }
-  //   }
 }
 
 const list = new LinkedList();
-list.appendNode(300);
-list.appendNode(400);
-list.appendNode(500);
+list.push(300);
+list.push(400);
+list.push(500);
 list.unshift(200);
-list.set(2, "hello");
+// list.set(2, "hello");
+list.insert(1, "monu");
+list.insert(3, "three");
 // console.log(list.shift());
 console.log(list);
+console.log(list.remove(4));
+// console.log(list.shift());
 // console.log(list.get(3));
 // console.log(list.search(400));
 // console.log(list.pop());
