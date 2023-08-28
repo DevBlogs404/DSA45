@@ -42,6 +42,10 @@ class LinkedList {
   // removes the last element from the list
   pop() {
     if (!this.head) return null;
+    if (this.length === 0) {
+      this.head = null;
+      this.tail = null;
+    }
     let currentNode = this.head;
     let newTail = currentNode;
     while (currentNode.next) {
@@ -51,10 +55,6 @@ class LinkedList {
     this.tail = newTail;
     this.tail.next = null;
     this.length--;
-    if (this.length === 0) {
-      this.head = null;
-      this.tail = null;
-    }
     return currentNode;
   }
 
@@ -149,6 +149,20 @@ class LinkedList {
     // return this.length;
     console.log("length of the linked list is: " + this.length);
   }
+  reverse() {
+    let temp = this.head;
+    this.head = this.tail;
+    this.tail = temp;
+    let next = temp.next;
+    let prev = null;
+    for (let i = 0; i < this.length; i++) {
+      next = temp.next;
+      temp.next = prev;
+      prev = temp;
+      temp = next;
+    }
+    return this;
+  }
 }
 
 const list = new LinkedList();
@@ -161,7 +175,7 @@ list.insert(1, "monu");
 list.insert(3, "three");
 // console.log(list.shift());
 console.log(list);
-console.log(list.remove(4));
+// console.log(list.remove(4));
 // console.log(list.shift());
 // console.log(list.get(3));
 // console.log(list.search(400));
